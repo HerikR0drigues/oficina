@@ -12,7 +12,7 @@ import java.sql.DriverManager;
  */
 public class Conexao {
     private static Connection con;  
-    private static String url = "jdbc:postgresql://localhost:5432/teste";
+    private static String url = "jdbc:postgresql://localhost:5432/db";
     private static String user = "herik";
     private static String password = "1341";
      
