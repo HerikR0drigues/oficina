@@ -7,6 +7,7 @@ package oficina.gui;
 import java.awt.Color;
 import javax.swing.border.EmptyBorder;
 import oficina.gui.cadastro.CadastroCliente;
+import oficina.gui.cadastro.CadastroProduto;
 import oficina.gui.consulta.ConsultaCliente;
 
 /**
@@ -37,6 +38,10 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanelConsulta = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanelOrdemServico = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanelCadastrarProduto = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -123,25 +128,100 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        jPanelOrdemServico.setBackground(new java.awt.Color(160, 160, 160));
+        jPanelOrdemServico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelOrdemServico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelOrdemServicoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanelOrdemServicoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanelOrdemServicoMouseExited(evt);
+            }
+        });
+
+        jLabel3.setText("Ordem de Serviço");
+
+        javax.swing.GroupLayout jPanelOrdemServicoLayout = new javax.swing.GroupLayout(jPanelOrdemServico);
+        jPanelOrdemServico.setLayout(jPanelOrdemServicoLayout);
+        jPanelOrdemServicoLayout.setHorizontalGroup(
+            jPanelOrdemServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOrdemServicoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelOrdemServicoLayout.setVerticalGroup(
+            jPanelOrdemServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelOrdemServicoLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel3)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        jPanelCadastrarProduto.setBackground(new java.awt.Color(160, 160, 160));
+        jPanelCadastrarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanelCadastrarProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelCadastrarProdutoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanelCadastrarProdutoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanelCadastrarProdutoMouseExited(evt);
+            }
+        });
+
+        jLabel4.setText("Cadastrar Produto");
+
+        javax.swing.GroupLayout jPanelCadastrarProdutoLayout = new javax.swing.GroupLayout(jPanelCadastrarProduto);
+        jPanelCadastrarProduto.setLayout(jPanelCadastrarProdutoLayout);
+        jPanelCadastrarProdutoLayout.setHorizontalGroup(
+            jPanelCadastrarProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCadastrarProdutoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelCadastrarProdutoLayout.setVerticalGroup(
+            jPanelCadastrarProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCadastrarProdutoLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel4)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanelPrincipalLayout = new javax.swing.GroupLayout(jPanelPrincipal);
         jPanelPrincipal.setLayout(jPanelPrincipalLayout);
         jPanelPrincipalLayout.setHorizontalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(309, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addComponent(jPanelOrdemServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelCadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanelPrincipalLayout.setVerticalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanelConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanelOrdemServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelCadastrarProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -184,6 +264,32 @@ public class Menu extends javax.swing.JFrame {
         consultaCliente.setVisible(true);
     }//GEN-LAST:event_jPanelConsultaMouseClicked
 
+    private void jPanelOrdemServicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelOrdemServicoMouseEntered
+         jPanelOrdemServico.setBackground(new Color(130,130,130)); 
+    }//GEN-LAST:event_jPanelOrdemServicoMouseEntered
+
+    private void jPanelOrdemServicoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelOrdemServicoMouseExited
+         jPanelOrdemServico.setBackground(new Color(160,160,160)); 
+    }//GEN-LAST:event_jPanelOrdemServicoMouseExited
+
+    private void jPanelOrdemServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelOrdemServicoMouseClicked
+        OrdemServico ordemServico = new OrdemServico();
+        ordemServico.setVisible(true);
+    }//GEN-LAST:event_jPanelOrdemServicoMouseClicked
+
+    private void jPanelCadastrarProdutoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelCadastrarProdutoMouseEntered
+        jPanelCadastrarProduto.setBackground(new Color(130,130,130)); 
+    }//GEN-LAST:event_jPanelCadastrarProdutoMouseEntered
+
+    private void jPanelCadastrarProdutoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelCadastrarProdutoMouseExited
+        jPanelCadastrarProduto.setBackground(new Color(160,160,160)); 
+    }//GEN-LAST:event_jPanelCadastrarProdutoMouseExited
+
+    private void jPanelCadastrarProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelCadastrarProdutoMouseClicked
+        CadastroProduto cadastroProduto = new CadastroProduto();
+        cadastroProduto.setVisible(true);
+    }//GEN-LAST:event_jPanelCadastrarProdutoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -222,9 +328,13 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelCadastrarProduto;
     private javax.swing.JPanel jPanelCadastro;
     private javax.swing.JPanel jPanelConsulta;
+    private javax.swing.JPanel jPanelOrdemServico;
     private javax.swing.JPanel jPanelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
