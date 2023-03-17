@@ -1,0 +1,30 @@
+create table usuario_senha (
+	id_usuario_senha SERIAL PRIMARY KEY,
+	usuario VARCHAR(50),
+	senha VARCHAR(50)
+);
+
+create table cliente (
+	id_cliente SERIAL PRIMARY KEY,
+	cpf VARCHAR(50),
+	nome VARCHAR(50),
+	telefone VARCHAR(50)
+);
+
+create table produto (
+	id_produto SERIAL PRIMARY KEY,
+	nome VARCHAR(50),
+	preco float
+);
+
+insert into usuario_senha (usuario, senha) values '1','1';
+
+insert into cliente (cpf, nome, telefone) values ('1', 'Miguel', '4898856321');
+insert into cliente (cpf, nome, telefone) values ('2', 'Angela', '489896321');
+insert into cliente (cpf, nome, telefone) values ('3', 'Felipe', '4898550551');
+insert into cliente (cpf, nome, telefone) values ('4', 'Larissa', '489002361');
+
+insert into produto (nome, preco) values ('MAO DE OBRA', '100');
+insert into produto (nome, preco) values ('CORREIA DENTADA', '170');
+insert into produto (nome, preco) values ('VELA NGK', '35');
+insert into produto (nome, preco) values ('VIRABREQUINHO', '3800');
