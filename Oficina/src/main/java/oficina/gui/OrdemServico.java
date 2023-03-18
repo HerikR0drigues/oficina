@@ -4,16 +4,20 @@
  */
 package oficina.gui;
 
+import java.io.File;
+import java.io.FileWriter;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import oficina.dominio.Cliente;
 import oficina.dominio.Produto;
+import oficina.dominio.Funcoes;
 import oficina.jdbc.JDBCCliente;
 import oficina.jdbc.JDBCProduto;
 
 /**
  *
- * @author 1072222792
+ * @author Herik
  */
 public class OrdemServico extends javax.swing.JFrame {
 
@@ -39,25 +43,31 @@ public class OrdemServico extends javax.swing.JFrame {
         jTextFieldCpf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
-        jButtonOkCliente = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldCodigo = new javax.swing.JTextField();
         jTextFieldNomeProduto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldPreco = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButtonOkProduto = new javax.swing.JButton();
         jButtonIr = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProduto = new javax.swing.JTable();
         jTextFieldPrecoTotal = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jButtonDeletar = new javax.swing.JButton();
+        jButtonGerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(160, 160, 160));
 
         jLabel1.setText("CPF Cliente:");
+
+        jTextFieldCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldCpfFocusLost(evt);
+            }
+        });
 
         jLabel2.setText("Nome Cliente:");
 
@@ -68,14 +78,13 @@ public class OrdemServico extends javax.swing.JFrame {
             }
         });
 
-        jButtonOkCliente.setText("OK");
-        jButtonOkCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonOkClienteActionPerformed(evt);
+        jLabel3.setText("Codigo:");
+
+        jTextFieldCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldCodigoFocusLost(evt);
             }
         });
-
-        jLabel3.setText("Codigo:");
 
         jTextFieldNomeProduto.setEditable(false);
         jTextFieldNomeProduto.addActionListener(new java.awt.event.ActionListener() {
@@ -87,13 +96,6 @@ public class OrdemServico extends javax.swing.JFrame {
         jLabel4.setText("Nome:");
 
         jLabel5.setText("Preço R$:");
-
-        jButtonOkProduto.setText("OK");
-        jButtonOkProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonOkProdutoActionPerformed(evt);
-            }
-        });
 
         jButtonIr.setText("IR");
         jButtonIr.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +139,20 @@ public class OrdemServico extends javax.swing.JFrame {
 
         jLabel6.setText("Preço total:");
 
+        jButtonDeletar.setText("Deletar");
+        jButtonDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeletarActionPerformed(evt);
+            }
+        });
+
+        jButtonGerar.setText("Gerar OS");
+        jButtonGerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGerarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,15 +169,12 @@ public class OrdemServico extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(30, 30, 30)
-                                .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonOkCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 30, Short.MAX_VALUE))
+                                .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 28, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonOkProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -174,12 +187,16 @@ public class OrdemServico extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPrecoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jButtonDeletar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextFieldPrecoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonGerar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38))
         );
         jPanel1Layout.setVerticalGroup(
@@ -188,8 +205,7 @@ public class OrdemServico extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonOkCliente))
+                    .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -205,16 +221,17 @@ public class OrdemServico extends javax.swing.JFrame {
                     .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonOkProduto)
-                    .addComponent(jButtonIr))
+                .addComponent(jButtonIr)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPrecoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(jButtonDeletar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(jButtonGerar)
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,7 +242,9 @@ public class OrdemServico extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,19 +254,48 @@ public class OrdemServico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNomeActionPerformed
 
-    private void jButtonOkClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkClienteActionPerformed
-        Cliente cliente = new Cliente(jTextFieldCpf.getText(), null, null);
-        JDBCCliente JDBCCliente = new JDBCCliente();  
-        cliente = JDBCCliente.consultarCliente(cliente);
-        
-        jTextFieldNome.setText(cliente.getNome());
-    }//GEN-LAST:event_jButtonOkClienteActionPerformed
-
     private void jTextFieldNomeProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNomeProdutoActionPerformed
 
-    private void jButtonOkProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkProdutoActionPerformed
+    private void jButtonIrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrActionPerformed
+        /*DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+        model.addRow(new Object[]{jTextFieldCodigo.getText(), jTextFieldNomeProduto.getText(), jTextFieldPreco.getText()});
+        
+        int row = jTableProduto.getRowCount();
+        float precoTotal = 0;
+       
+        for (int i = 0; i < row; i++) {
+            precoTotal = Float.parseFloat((String) jTableProduto.getValueAt(i, 2)) + precoTotal;
+        }
+        
+        jTextFieldPrecoTotal.setText(Float.toString(precoTotal));*/
+        DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+        Funcoes funcoes = new Funcoes();
+        jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model, jTextFieldCodigo.getText(), jTextFieldNomeProduto.getText(), jTextFieldPreco.getText())));
+        
+    }//GEN-LAST:event_jButtonIrActionPerformed
+
+    private void jTextFieldPrecoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrecoTotalActionPerformed
+
+    private void jButtonDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeletarActionPerformed
+        DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+        if(jTableProduto.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(rootPane, "Nenhum produto selecionado!");
+        } else {
+            int row = jTableProduto.getSelectedRow();
+            model.removeRow(row);
+            jTableProduto.setModel(model);
+
+            Funcoes funcoes = new Funcoes();
+            jTextFieldPrecoTotal.setText(Float.toString(funcoes.updatedDeletedRowTable(model)));
+        }
+
+    }//GEN-LAST:event_jButtonDeletarActionPerformed
+
+    private void jTextFieldCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCodigoFocusLost
         Produto produto = new Produto(null, 0);
         produto.setId_produto(Integer.parseInt(jTextFieldCodigo.getText()));
         
@@ -256,25 +304,26 @@ public class OrdemServico extends javax.swing.JFrame {
         
         jTextFieldNomeProduto.setText(produto.getNome());
         jTextFieldPreco.setText(Float.toString(produto.getPreco()));
-    }//GEN-LAST:event_jButtonOkProdutoActionPerformed
+    }//GEN-LAST:event_jTextFieldCodigoFocusLost
 
-    private void jButtonIrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIrActionPerformed
-        DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
-        model.addRow(new Object[]{jTextFieldCodigo.getText(), jTextFieldNomeProduto.getText(), jTextFieldPreco.getText()});
+    private void jTextFieldCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldCpfFocusLost
+        Cliente cliente = new Cliente(jTextFieldCpf.getText(), null, null);
+        JDBCCliente JDBCCliente = new JDBCCliente();  
+        cliente = JDBCCliente.consultarCliente(cliente);
         
-        int row = jTableProduto.getRowCount();
-        float precoTotal = 0;
-       
-        for (int i = 0; i < row; i++) {
-            precoTotal = Float.parseFloat((String) jTableProduto.getValueAt(row-1, 2)) + precoTotal;
+        jTextFieldNome.setText(cliente.getNome());
+    }//GEN-LAST:event_jTextFieldCpfFocusLost
+
+    private void jButtonGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarActionPerformed
+        File arquivo = new File("C:\\Users\\1072222792\\OrdemServico.txt");
+        
+        try {
+            FileWriter myWriter = new FileWriter("OrdemServico.txt");
+            myWriter.write("TESTANDOoOSSADODSAODSAOIJIJDJIJSAIDJSAIDJSAJDIJDIASJIDADSAODSAO");
+        } catch (Exception e) {
         }
         
-        jTextFieldPrecoTotal.setText(Float.toString(precoTotal));
-    }//GEN-LAST:event_jButtonIrActionPerformed
-
-    private void jTextFieldPrecoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecoTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPrecoTotalActionPerformed
+    }//GEN-LAST:event_jButtonGerarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -312,9 +361,9 @@ public class OrdemServico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonDeletar;
+    private javax.swing.JButton jButtonGerar;
     private javax.swing.JButton jButtonIr;
-    private javax.swing.JButton jButtonOkCliente;
-    private javax.swing.JButton jButtonOkProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

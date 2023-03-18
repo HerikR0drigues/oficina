@@ -68,7 +68,18 @@ public class JDBCCliente {
         }
     }
     
-    
+        public boolean deleteCliente (Cliente cliente) {
+        try {
+            con = conectar();
+            stm = con.createStatement();
+            
+            String query = "delete from cliente where cpf = '"+cliente.getCpf()+"';";
+            stm.executeUpdate(query);	
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     
     
     

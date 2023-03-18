@@ -13,7 +13,7 @@ import oficina.dominio.Produto;
 
 /**
  *
- * @author 1072222792
+ * @author Herik
  */
 public class JDBCProduto {
     

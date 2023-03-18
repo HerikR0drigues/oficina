@@ -166,7 +166,14 @@ public class ConsultaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTelefoneActionPerformed
 
     private void jButtonDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeletarActionPerformed
-        // TODO add your handling code here:
+        Cliente cliente = new Cliente(jTextFieldCpf.getText(), null, null);
+        JDBCCliente JDBCCliente = new JDBCCliente();  
+        if(JDBCCliente.deleteCliente(cliente)) {
+            JOptionPane.showMessageDialog(null, "Deletado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao Deletar!");
+        }
+        
     }//GEN-LAST:event_jButtonDeletarActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
