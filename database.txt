@@ -17,7 +17,30 @@ create table produto (
 	preco float
 );
 
-insert into usuario_senha (usuario, senha) values '1','1';
+create table ordem_servico (
+	id_ordem_servico SERIAL,
+	id_cliente integer
+);
+
+create table ordem_servico_detalhes (
+	id_ordem_servico int,
+	id_produto int,
+	qtd integer,
+	preco float
+);
+
+
+ALTER TABLE ordem_servico_detalhes
+    ADD FOREIGN KEY (id_produto) REFERENCES produto(id_produto);
+
+ALTER TABLE ordem_servico_detalhes
+    ADD FOREIGN KEY (id_ordem_servico) REFERENCES ordem_servico (id_ordem_servico);
+
+ALTER TABLE ordem_servico
+    ADD FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente);
+
+
+insert into usuario_senha (usuario, senha) values ('1','1');
 
 insert into cliente (cpf, nome, telefone) values ('1', 'Miguel', '4898856321');
 insert into cliente (cpf, nome, telefone) values ('2', 'Angela', '489896321');
