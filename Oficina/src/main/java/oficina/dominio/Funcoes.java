@@ -12,15 +12,19 @@ import javax.swing.table.DefaultTableModel;
  * @author Herik
  */
 public class Funcoes {
-    public float updateTable(DefaultTableModel model, String codigo, String nome, String preco) {
+    public float updateTable(DefaultTableModel model, String codigo, String nome, String qtd, String preco) {
         
-        model.addRow(new Object[]{codigo, nome, preco});
+        model.addRow(new Object[]{codigo, nome, qtd, preco});
         
         int row = model.getRowCount();
         float precoTotal = 0;
+        float precoUnitario = 0;
+        float quantidade = 0;
        
         for (int i = 0; i < row; i++) {
-            precoTotal = Float.parseFloat((String) model.getValueAt(i, 2)) + precoTotal;
+            precoUnitario = Float.parseFloat((String) model.getValueAt(i, 3));
+            quantidade = Float.parseFloat((String) model.getValueAt(i, 2));     
+            precoTotal += precoUnitario*quantidade;
         }
         
         return precoTotal;
@@ -31,9 +35,14 @@ public class Funcoes {
         
         int row = model.getRowCount();
         float precoTotal = 0;
+        float precoUnitario = 0;
+        float quantidade = 0;
        
+        
         for (int i = 0; i < row; i++) {
-            precoTotal = Float.parseFloat((String) model.getValueAt(i, 2)) + precoTotal;
+            precoUnitario = Float.parseFloat((String) model.getValueAt(i, 3));
+            quantidade = Float.parseFloat((String) model.getValueAt(i, 2));     
+            precoTotal += precoUnitario*quantidade;
         }
         
         return precoTotal;
