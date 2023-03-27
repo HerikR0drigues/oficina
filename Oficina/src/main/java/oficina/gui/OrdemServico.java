@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import oficina.dominio.Cliente;
 import oficina.dominio.Produto;
 import oficina.dominio.Funcoes;
+import oficina.dominio.OrdemServicoDominio;
 import oficina.jdbc.JDBCCliente;
 import oficina.jdbc.JDBCOrdemServico;
 import oficina.jdbc.JDBCProduto;
@@ -30,6 +31,7 @@ public class OrdemServico extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,6 +171,12 @@ public class OrdemServico extends javax.swing.JFrame {
 
         jLabel8.setText("Ordem de Serviço N:");
 
+        jTextFieldNumOrdemServico.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldNumOrdemServicoFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -195,43 +203,40 @@ public class OrdemServico extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldPreco)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jButtonIr))
-                                        .addGap(0, 1, Short.MAX_VALUE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(10, 10, 10))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNumOrdemServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldNumOrdemServico, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPreco)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jButtonIr))
+                                .addGap(0, 1, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +315,7 @@ public class OrdemServico extends javax.swing.JFrame {
         jTextFieldPrecoTotal.setText(Float.toString(precoTotal));*/
         DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
         Funcoes funcoes = new Funcoes();
-        jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model, jTextFieldCodigo.getText(), jTextFieldNomeProduto.getText(), jTextFieldQtd.getText(), jTextFieldPreco.getText())));
+        jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTableInsert(model, jTextFieldCodigo.getText(), jTextFieldNomeProduto.getText(), jTextFieldQtd.getText(), jTextFieldPreco.getText())));
         
     }//GEN-LAST:event_jButtonIrActionPerformed
 
@@ -328,7 +333,7 @@ public class OrdemServico extends javax.swing.JFrame {
             jTableProduto.setModel(model);
 
             Funcoes funcoes = new Funcoes();
-            jTextFieldPrecoTotal.setText(Float.toString(funcoes.updatedDeletedRowTable(model)));
+            jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model)));
         }
 
     }//GEN-LAST:event_jButtonDeletarActionPerformed
@@ -383,6 +388,26 @@ public class OrdemServico extends javax.swing.JFrame {
     private void jTextFieldQtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldQtdActionPerformed
+
+    private void jTextFieldNumOrdemServicoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNumOrdemServicoFocusLost
+        JDBCOrdemServico JDBCOrdemServico = new JDBCOrdemServico();  
+        Funcoes funcoes = new Funcoes();
+        
+        OrdemServicoDominio ordemServicoDominio;
+        ordemServicoDominio = JDBCOrdemServico.buscarOrdemServico(Integer.parseInt(jTextFieldNumOrdemServico.getText()));
+        
+        jTextFieldCpf.setText(ordemServicoDominio.getCpf());
+        jTextFieldNome.setText(ordemServicoDominio.getNome());
+        
+        DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+
+        for(int i = 0; i < ordemServicoDominio.getId_produtoLength(); i++) {
+            model.addRow(new Object[]{ordemServicoDominio.getId_produto(i), ordemServicoDominio.getNomeProduto(i), ordemServicoDominio.getQtd(i), ordemServicoDominio.getPreco(i)});
+        }
+        jTableProduto.setModel(model);
+        
+        jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model)));
+    }//GEN-LAST:event_jTextFieldNumOrdemServicoFocusLost
 
     /**
      * @param args the command line arguments
