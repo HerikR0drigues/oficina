@@ -14,7 +14,7 @@ public class Conexao {
     private static Connection con;  
     private static String url = "jdbc:postgresql://localhost:5432/teste";
     private static String user = "herik";
-    private static String password = "1341";
+    private static String password = "123";
      
     public static Connection conectar(){
         try {

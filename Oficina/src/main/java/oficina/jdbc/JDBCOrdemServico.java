@@ -18,7 +18,7 @@ public class JDBCOrdemServico {
     private Connection con;
     private Statement stm;
     
-    public boolean salvarOrdemServico(DefaultTableModel model, String cpfCliente, int id_produto, int qtd, float preco) {
+    public boolean salvarOrdemServico(DefaultTableModel model, String cpfCliente) {
         int row = model.getRowCount();
         int id_cliente = 0;
         int id_ordem_servico = 0;
@@ -41,7 +41,7 @@ public class JDBCOrdemServico {
                while ( rs.next() ) {
                    id_ordem_servico = rs.getInt(1);
                }
-
+               
                for (int i = 0; i < row; i++) {
                    query = "insert into ordem_servico_detalhes(id_ordem_servico, id_produto, qtd, preco) values ('"+id_ordem_servico+"', '"+Integer.parseInt((String) model.getValueAt(i, 0))+"', '"+Integer.parseInt((String) model.getValueAt(i, 2))+"', '"+Float.parseFloat((String) model.getValueAt(i, 3))+"');";
                    stm.executeUpdate(query);
@@ -117,6 +117,27 @@ public class JDBCOrdemServico {
             e.printStackTrace();
             return null;
         }
+    }
+    
+    public boolean verificarOrdemServico(int numOrdemServico) {
+        
+        try {
+            con = conectar();
+            stm = con.createStatement();
+
+            String query = "select id_ordem_servico from ordem_servico where id_ordem_servico = '"+numOrdemServico+"';";	
+            rs = stm.executeQuery(query);
+            
+            if(rs.isBeforeFirst()) {
+                return true;
+            }     
+            
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
     }
 
 }

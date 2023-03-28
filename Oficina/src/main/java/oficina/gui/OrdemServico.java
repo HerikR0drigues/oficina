@@ -7,6 +7,8 @@ package oficina.gui;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -361,7 +363,7 @@ public class OrdemServico extends javax.swing.JFrame {
         JDBCOrdemServico JDBCOrdemServico = new JDBCOrdemServico();  
         DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
         
-        if(JDBCOrdemServico.salvarOrdemServico(model, jTextFieldCpf.getText(), Integer.parseInt(jTextFieldCodigo.getText()), Integer.parseInt(jTextFieldQtd.getText()), Float.parseFloat(jTextFieldPreco.getText()))) {
+        if(JDBCOrdemServico.salvarOrdemServico(model, jTextFieldCpf.getText())) {
             JOptionPane.showMessageDialog(null, "Ordem de serviço salva com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao salvar a ordem de serviço!");
@@ -390,23 +392,44 @@ public class OrdemServico extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldQtdActionPerformed
 
     private void jTextFieldNumOrdemServicoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNumOrdemServicoFocusLost
-        JDBCOrdemServico JDBCOrdemServico = new JDBCOrdemServico();  
-        Funcoes funcoes = new Funcoes();
-        
-        OrdemServicoDominio ordemServicoDominio;
-        ordemServicoDominio = JDBCOrdemServico.buscarOrdemServico(Integer.parseInt(jTextFieldNumOrdemServico.getText()));
-        
-        jTextFieldCpf.setText(ordemServicoDominio.getCpf());
-        jTextFieldNome.setText(ordemServicoDominio.getNome());
-        
-        DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+        if(jTextFieldNumOrdemServico.getText().isEmpty()) {
 
-        for(int i = 0; i < ordemServicoDominio.getId_produtoLength(); i++) {
-            model.addRow(new Object[]{ordemServicoDominio.getId_produto(i), ordemServicoDominio.getNomeProduto(i), ordemServicoDominio.getQtd(i), ordemServicoDominio.getPreco(i)});
-        }
-        jTableProduto.setModel(model);
+        } 
         
-        jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model)));
+        try {
+            int test = Integer.parseInt(jTextFieldNumOrdemServico.getText());
+            JDBCOrdemServico JDBCOrdemServico = new JDBCOrdemServico();  
+            
+            if(JDBCOrdemServico.verificarOrdemServico(Integer.parseInt(jTextFieldNumOrdemServico.getText()))) {
+            
+                Funcoes funcoes = new Funcoes();
+                OrdemServicoDominio ordemServicoDominio;
+                ordemServicoDominio = JDBCOrdemServico.buscarOrdemServico(Integer.parseInt(jTextFieldNumOrdemServico.getText()));
+
+                jTextFieldCpf.setText(ordemServicoDominio.getCpf());
+                jTextFieldNome.setText(ordemServicoDominio.getNome());
+
+                DefaultTableModel model = (DefaultTableModel)jTableProduto.getModel();
+                model.setRowCount(0);
+                
+                for(int i = 0; i < ordemServicoDominio.getId_produtoLength(); i++) {
+                    model.addRow(new Object[]{ordemServicoDominio.getId_produto(i), ordemServicoDominio.getNomeProduto(i), ordemServicoDominio.getQtd(i), ordemServicoDominio.getPreco(i)});
+                }
+                jTableProduto.setModel(model);
+
+                jTextFieldPrecoTotal.setText(Float.toString(funcoes.updateTable(model)));
+            
+            } else {
+                JOptionPane.showMessageDialog(null, "Numero da Ordem de serviço não encontrado!");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Informe um numero valido!");
+        }
+        
+            
+            
+        
+        
     }//GEN-LAST:event_jTextFieldNumOrdemServicoFocusLost
 
     /**

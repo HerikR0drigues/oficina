@@ -23,8 +23,8 @@ public class Funcoes {
 
        
         for (int i = 0; i < row; i++) {
-            precoUnitario = (Float) model.getValueAt(i, 3);
-            quantidade = (Integer) model.getValueAt(i, 2);     
+            precoUnitario = Float.parseFloat((String) model.getValueAt(i, 3));
+            quantidade = Integer.parseInt((String) model.getValueAt(i, 2));     
             precoTotal += precoUnitario*quantidade;
         }
         
